@@ -8,10 +8,32 @@ PREFIX = '$'
 client = commands.Bot( command_prefix = PREFIX )
 client.remove_command( 'help' )
 
+# Words
+hello_words = [ 'hello', 'hi', 'привет', 'privet', 'ky', 'ку', 'здарова' ]
+answer_words = [ 'узнать информацию о сервере', 'какая информация', 
+				'команды', 'команды сервера' ]
+goodbye_words = [ 'Пока', 'Удачи', 'Прощай', 'Бывай' ]
+
 @client.event
 
 async def on_ready():
 	print( 'BOT connected' )
+	
+# Words
+@client.event
+
+async def on_message( message ):
+	msg = message.content.lower()
+
+	if msg in hello_words:
+		await message.channel.send( 'Чем могу быть полезен?' )
+
+	if msg in answer_words:
+		await message.channel.send( 'Напиши команду .help' )
+
+	if msg in goodbye_words:
+		await message.channel.send( 'Пока' )
+
 	
 # Clear message
 @client.command ( pass_context = True )
