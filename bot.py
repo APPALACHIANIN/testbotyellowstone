@@ -34,9 +34,6 @@ async def on_message( message ):
 	if msg in goodbye_words:
 		await message.channel.send( 'Пока' )
 
-# Main commands		
-@client.event		
-		
 # Clear message
 @client.command ( pass_context = True )
 @commands.has_permissions( administrator = True )
