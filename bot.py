@@ -29,12 +29,14 @@ async def on_message( message ):
 		await message.channel.send( 'Чем могу быть полезен?' )
 
 	if msg in answer_words:
-		await message.channel.send( 'Напиши команду .help' )
+		await message.channel.send( 'Напиши команду $help' )
 
 	if msg in goodbye_words:
 		await message.channel.send( 'Пока' )
 
-	
+# Main commands		
+@client.event		
+		
 # Clear message
 @client.command ( pass_context = True )
 @commands.has_permissions( administrator = True )
