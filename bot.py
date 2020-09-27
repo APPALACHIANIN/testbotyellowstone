@@ -71,8 +71,10 @@ async def help( ctx ):
 	await ctx.send( embed = emb )
 
 # Get token
-token = open( 'token.txt', 'r' ).readline()
+token = os.environ.get('BOT_TOKEN')
 
-client.run( token )
+client.run(str(token))
+
+
 
 
