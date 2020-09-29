@@ -109,7 +109,7 @@ async def mute( ctx, member: discord.Member ):
 
 	await member.add_roles( mute_role )
 	await ctx.send( f'У { member.mention }, ограничение чата за нарушение прав!' )
-
+	
 # Get token
 token = os.environ.get('BOT_TOKEN')
 
