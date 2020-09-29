@@ -71,6 +71,22 @@ async def help( ctx ):
 
 	await ctx.send( embed = emb )
 
+@client.command( pass_context = True )
+@commands.has_permissions( administrator = True )
+
+async def time( ctx ):
+	emb = discord.Embed( title = 'Твой заголовок', colour = discord.Color.green(), url = 'https://www.timeserver.ru/cities/kz/taldykorgan' )
+
+	emb.set_author( name = client.user.name, icon_url = client.user.avatar_url )
+	emb.set_footer( name = ctx.author.name, icon_url = ctx.author.avatar_url )
+	emb.set_image( url = 'https://support.apple.com/library/content/dam/edam/applecare/images/en_US/applewatch/watchos6-series5-watch-not-connected.jpg' )
+	emb.thumbnail( url = 'https://support.apple.com/library/content/dam/edam/applecare/images/en_US/applewatch/watchos6-series5-watch-not-connected.jpg' )
+
+	now_date = datetime.datetime.now()
+	emb.add_field( name = 'Time', value = 'Время : {}'.format( now_date ) )
+
+	await ctx.send( embed = emb )
+
 # Get token
 token = os.environ.get('BOT_TOKEN')
 
