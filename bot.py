@@ -81,6 +81,9 @@ async def help( ctx ):
 	await ctx.send( embed = emb )
 
 # Time
+@client.command()
+@commands.has_permissions( administrator = True )
+
 async def time( ctx ):
 	emb = discord.Embed( title = 'Ваше время', description = 'Здесь вы сможете узнать время по городу' , colour = discord.Color.green(), url = 'https://www.timeserver.ru/cities/kz/taldykorgan' )
 
