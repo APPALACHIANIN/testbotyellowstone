@@ -216,7 +216,6 @@ async def leave(ctx):
 		voice = await channel.connect()
 		await ctx.send(f'Бот YELLOWSTONE отключился от канала: {channel}')
 
-
 # Error
 @clear.error
 async def clear_error( ctx, error ):
