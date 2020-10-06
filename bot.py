@@ -35,31 +35,6 @@ async def on_member_join( member ):
 	await channel.send( embed = discord.Embed( description = f'Пользователь ``{ member.name }``, присоединился к серверу YELLOWSTONE', 
 						color = 0x3c7c5c ) )
 
-# Code
-
-@client.event
-
-async def on_reaction_add( reaction, user ):
-	if reaction.message.channel.id == 757431308799574066:
-		if user == client.user:
-			pass
-
-		else:
-			reacts = reaction.message.reactions()
-
-			bad = reacts.index( ':thumbsdown:' )
-			good = reacts.index( ':thumbsup:' )
-			if reaction.emoji() == ':thumbsup:':
-				if user in reacts[ bad ].users():
-					await reacts[ bad ].remove( user )
-
-			elif reaction.emoji() == ':thumbsdown:':
-				if ':thumbsup:' in reacts.emoji():
-					if user in reacts[ good ].users():
-						await reacts[ good ].remove( user )
-
-#####		
-
 # Clear message
 @client.command ( pass_context = True )
 @commands.has_permissions( administrator = True )
