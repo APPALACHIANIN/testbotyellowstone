@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands 
 import os
 import datetime
-
+from discord.utils import get
+import youtube_dl
 
 
 PREFIX = '$'
@@ -15,11 +16,55 @@ client.remove_command( 'help' )
 async def on_ready():
 	print( 'Бот подключился к серверу' )
 
+	await client.change_presence( status = discord.Status.online, activity = discord.Game( 'Вулканчик Пиндосии' ) )
+
+# Work with errors
+@client.event
+async def on_command_error( ctx, error ):
+	pass 
+
+# Auto-role
+@client.event
+
+async def on_member_join( member ):
+	channel = client.get_channel( 757431308799574066 )
+
+	role = discord.utils.get( member.guild.roles, id = 756884707831971852 )
+
+	await member.add_roles( role )
+	await channel.send( embed = discord.Embed( description = f'Пользователь ``{ member.name }``, присоединился к серверу YELLOWSTONE', 
+						color = 0x3c7c5c ) )
+
+# Code
+
+@client.event
+
+async def on_reaction_add( reaction, user ):
+	if reaction.message.channel.id == 757431308799574066:
+		if user == client.user:
+			pass
+
+		else:
+			reacts = reaction.message.reactions()
+
+			bad = reacts.index( ':thumbsdown:' )
+			good = reacts.index( ':thumbsup:' )
+			if reaction.emoji() == ':thumbsup:':
+				if user in reacts[ bad ].users():
+					await reacts[ bad ].remove( user )
+
+			elif reaction.emoji() == ':thumbsdown:':
+				if ':thumbsup:' in reacts.emoji():
+					if user in reacts[ good ].users():
+						await reacts[ good ].remove( user )
+
+#####		
+
 # Clear message
 @client.command ( pass_context = True )
 @commands.has_permissions( administrator = True )
 
-async def clear( ctx, amount = 100):
+async def clear( ctx, amount : int):
 	await ctx.channel.purge( limit = amount )
 
 # Kick
@@ -77,6 +122,8 @@ async def help( ctx ):
 	emb.add_field( name = '{}ban'.format( PREFIX ), value = 'Ограничение участнику доступа к серверу' )
 	emb.add_field( name = '{}unban'.format( PREFIX ), value = 'Возобновление участнику доступа к серверу' )
 	emb.add_field( name = '{}time'.format( PREFIX ), value = 'Время по Иркутску' )
+	emb.add_field( name = '{}mute'.format( PREFIX ), value = 'Отключение функции чата у участника( Только администратором )' )
+
 
 	await ctx.send( embed = emb )
 
@@ -109,6 +156,100 @@ async def mute( ctx, member: discord.Member ):
 
 	await member.add_roles( mute_role )
 	await ctx.send( f'У { member.mention }, ограничение чата за нарушение прав!' )
+
+# Private messages
+# Приветствие
+@client.command()
+async def send_hello( ctx ):
+	await ctx.author.send( 'Привет, мудила...' )
+# Прощание
+@client.command()
+async def send_goodbye( ctx ):
+	await ctx.author.send( 'Прощай, мудила...' )
+# Как дела
+@client.command()
+async def send_how_are_you( ctx ):
+	await ctx.author.send( 'Иди нахуй, у меня все херово. Сегодня мне кастрировали список моих команд((' )
+# Для участника
+@client.command()
+async def send_m( ctx, member: discord.Member ):
+	await member.send( f'Привет, { member.name}, передаю важное сообщение от имени { ctx.author.name } - "Ты - ПИДР"' )
+
+# Voice Chat
+@client.command()
+async def join(ctx):
+	global voice
+	channel = ctx.message.author.voice.channel
+	voice = get(client.voice_clients, guild = ctx.guild)
+
+	if voice and voice.is_connected():
+		await voice.move_to(channel)
+	else:
+		voice = await channel.connect()
+
+# Music 
+@client.command()
+async def play(ctx, url : str):
+	song_there = os.path.isfile('song.mp3')
+
+	try:
+		if song_there:
+			os.remove('song.mp3')
+			print('[log] Предыдущая композиция удалена из списка воспроизведения')
+	except PermissionError:
+		print('[log] Не удалось воспроизвести композицию')
+
+	await ctx.send('Пожалуйста подождите...')
+
+	voice = get(client.voice_clients, guild = ctx.guild)
+
+	ydl_opts = {
+		'format' : 'bestaudio/best',
+		'postprocessors' : [{
+			'key' : 'FFmpegExtractAudio',
+			'preferredcodec' : 'mp3',
+			'preferredquality' : '192'
+		}],
+	}
+
+	with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+		print('[log] Загружаю музыкальную композицию...')
+		ydl.download([url])
+
+	for file in os.listdir('./'):
+		if file.endswith('.mp3'):
+			name = file
+			print('[log] Переименовываю файл: {file}')
+			os.rename(file, 'song.mp3')
+
+	voice.play(discord.FFmpegPCMAudio('song.mp3'), after = lambda e: print(f'[log] {name}, композиция закончила свое проигрывание'))
+	voice.source = discord.PCMVolumeTransformer(voice.source)
+	voice.source.volume = 0.07
+
+	song_name = name.rsplit('-', 2)
+	await ctx.send(f'Проигрывается композиция: {song_name[0]}')
+
+
+@client.command()
+async def leave(ctx):
+	channel = ctx.message.author.voice.channel
+	voice = get(client.voice_clients, guild = ctx.guild)
+
+	if voice and voice.is_connected():
+		await voice.disconnect()
+	else:
+		voice = await channel.connect()
+		await ctx.send(f'Бот YELLOWSTONE отключился от канала: {channel}')
+
+
+# Error
+@clear.error
+async def clear_error( ctx, error ):
+	if isinstance( error, commands.MissingRequiredArgument ):
+		await ctx.send( f'{ ctx.author.name }, обязательно укажите аргумент для команды!' )
+
+	if isinstance( error, commands.MissingPermissions ):
+		await ctx.send( f'{ ctx.author.name }, у ваша роли недостаточно прав!' )
 	
 # Get token
 token = os.environ.get('BOT_TOKEN')
