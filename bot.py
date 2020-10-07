@@ -102,7 +102,7 @@ async def help( ctx ):
 	emb.add_field( name = '{}send_goodbye'.format( PREFIX ), value = 'Бот попращается с вами' )
 	emb.add_field( name = '{}send_how_are_you'.format( PREFIX ), value = 'Бот расскажет вам о своих чувствах' )
 	emb.add_field( name = '{}join'.format( PREFIX ), value = 'Бот присоединяется к голосовому каналу' )
-	emb.add_field( name = '{}send_m @ник_участника'.format( PREFIX ), value = '"Важное сообщение", не рекомендуется к употреблению детям, беременным женщинам и слабонервным личностям!!!' )
+	emb.add_field( name = '{}send"нижний слэш"m @ник"нижний слэш"участника'.format( PREFIX ), value = '"Важное сообщение", не рекомендуется к употреблению детям, беременным женщинам и слабонервным личностям!!!' )
 	emb.add_field( name = '{}leave'.format( PREFIX ), value = 'Бот покидает голосовой канал' )
 	emb.add_field( name = '{}play "ссылка на YouTube видео или трек" без кавычек'.format( PREFIX ), value = 'Проигрывание ботом музыки, чтобы остановить музыку просто отключите бота из голосового канала, прост пока кнопки stop нету(' )
 
