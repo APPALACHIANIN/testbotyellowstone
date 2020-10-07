@@ -13,10 +13,32 @@ client.remove_command( 'help' )
 
 @client.event
 
+# Words
+bad_words1 = [ 'ты пидр' ]
+bad_words2 = [ 'нахуй иди', 'иди нахуй' ]
+bad_words = [ 'хуй', 'пизда', 'залупа', 'жопа', 'говно', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
+			 'гондон', 'пидарас', 'шмара', 'говно', 'хер', 'пидрила', 'ёбарь', 'ебать', 'ебашить', 'ебанутый', 'ебнутый', 'пизданутый', 'казах', 'москаль' ]
+
 async def on_ready():
 	print( 'Бот подключился к серверу' )
 
 	await client.change_presence( status = discord.Status.online, activity = discord.Game( 'Вулканчик Пиндосии' ) )
+
+
+@client.event
+
+async def on_message( message ):
+	await client.process_commands(message)
+	msg = message.content.lower()
+
+	if msg in bad_words1:
+		await message.channel.send( 'Ты охуел, пес?? Сам ты пидр!' )
+
+	if msg in bad_words2:
+		await message.channel.send( 'Сам иди нахуй! Говножуй...' )
+
+	if msg in bad_words:
+		await message.channel.send( 'Тебе че, кирпичом уебать? Или тебя еще в детстве уронили?' )
 
 # Work with errors
 @client.event
