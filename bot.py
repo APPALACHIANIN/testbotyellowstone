@@ -11,13 +11,13 @@ PREFIX = '$'
 client = commands.Bot( command_prefix = PREFIX )
 client.remove_command( 'help' )
 
-@client.event
-
 # Words
 bad_words1 = [ 'ты пидр' ]
 bad_words2 = [ 'нахуй иди', 'иди нахуй' ]
 bad_words = [ 'хуй', 'пизда', 'залупа', 'жопа', 'говно', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
 			 'гондон', 'пидарас', 'шмара', 'говно', 'хер', 'пидрила', 'ёбарь', 'ебать', 'ебашить', 'ебанутый', 'ебнутый', 'пизданутый', 'казах', 'москаль' ]
+
+@client.event
 
 async def on_ready():
 	print( 'Бот подключился к серверу' )
@@ -117,15 +117,8 @@ async def help( ctx ):
 	emb.add_field( name = '{}kick'.format( PREFIX ), value = 'Дисквалификация участника с сервера' )
 	emb.add_field( name = '{}ban'.format( PREFIX ), value = 'Ограничение участнику доступа к серверу' )
 	emb.add_field( name = '{}unban'.format( PREFIX ), value = 'Возобновление участнику доступа к серверу' )
-	emb.add_field( name = '{}time'.format( PREFIX ), value = 'Время по Иркутску, потому что я ленивая жопа и не захотел ставить ваше личное время в бота. В целом бесполезная, но кринжовая команда' )
+	emb.add_field( name = '{}time'.format( PREFIX ), value = 'Время по Иркутску' )
 	emb.add_field( name = '{}mute'.format( PREFIX ), value = 'Отключение функции чата у участника( Только администратором )' )
-	emb.add_field( name = '{}send_hello'.format( PREFIX ), value = 'Бот отправит вам "веселое" приветствие' )
-	emb.add_field( name = '{}send_goodbye'.format( PREFIX ), value = 'Бот попращается с вами' )
-	emb.add_field( name = '{}send_how_are_you'.format( PREFIX ), value = 'Бот расскажет вам о своих чувствах' )
-	emb.add_field( name = '{}join'.format( PREFIX ), value = 'Бот присоединяется к голосовому каналу' )
-	emb.add_field( name = '{}send"нижний слэш"m @ник"нижний слэш"участника'.format( PREFIX ), value = '"Важное сообщение", не рекомендуется к употреблению детям, беременным женщинам и слабонервным личностям!!!' )
-	emb.add_field( name = '{}leave'.format( PREFIX ), value = 'Бот покидает голосовой канал' )
-	emb.add_field( name = '{}play "ссылка на YouTube видео или трек" без кавычек'.format( PREFIX ), value = 'Проигрывание ботом музыки, чтобы остановить музыку просто отключите бота из голосового канала, прост пока кнопки stop нету(' )
 
 
 	await ctx.send( embed = emb )
@@ -244,6 +237,7 @@ async def leave(ctx):
 		voice = await channel.connect()
 		await ctx.send(f'Бот YELLOWSTONE отключился от канала: {channel}')
 
+
 # Error
 @clear.error
 async def clear_error( ctx, error ):
@@ -251,7 +245,7 @@ async def clear_error( ctx, error ):
 		await ctx.send( f'{ ctx.author.name }, обязательно укажите аргумент для команды!' )
 
 	if isinstance( error, commands.MissingPermissions ):
-		await ctx.send( f'{ ctx.author.name }, у вашей роли недостаточно прав!' )
+		await ctx.send( f'{ ctx.author.name }, у ваша роли недостаточно прав!' )
 	
 # Get token
 token = os.environ.get('BOT_TOKEN')
