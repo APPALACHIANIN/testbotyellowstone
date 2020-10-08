@@ -4,6 +4,7 @@ import os
 import datetime
 from discord.utils import get
 import youtube_dl
+import random
 
 
 PREFIX = '$'
@@ -12,7 +13,7 @@ client = commands.Bot( command_prefix = PREFIX )
 client.remove_command( 'help' )
 
 # Words
-bad_words = [ 'хуй', 'пизда', 'залупа', 'жопа', 'говно', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
+bad = [ 'хуй', 'пизда', 'залупа', 'жопа', 'говно', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
 			 'гондон', 'пидарас', 'шмара', 'говно', 'хер', 'пидрила', 'ёбарь', 'ебать', 'ебашить', 'ебанутый', 'ебнутый', 'пизданутый', 'казах', 'москаль' ]
 words = [
 'Нецензурная лексика на нашем сервере запрещена. Если вы продолжите нецензурно выражаться мы можем ограничить вам доступ к чату. Не делайте так, уважайте себя и других участников сервера.',
@@ -27,14 +28,14 @@ async def on_ready():
 	print( 'Бот подключился к серверу' )
 
 	await client.change_presence( status = discord.Status.online, activity = discord.Game( 'Вулканчик Пиндосии' ) )
-
+# Messages
 @client.event
 
 async def on_message( message ):
 	await client.process_commands(message)
 	msg = message.content.lower()
 
-	if msg in bad_words:
+	if msg in bad:
 		await message.channel.send( random.choice(words))
 
 # Work with errors
