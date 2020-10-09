@@ -15,12 +15,6 @@ client.remove_command( 'help' )
 # Words
 bad = [ 'хуй', 'пизда', 'залупа', 'жопа', 'говно', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
 			 'гондон', 'пидарас', 'шмара', 'говно', 'хер', 'пидрила', 'ёбарь', 'ебать', 'ебашить', 'ебанутый', 'ебнутый', 'пизданутый', 'казах', 'москаль' ]
-words = [
-'Нецензурная лексика на нашем сервере запрещена. Если вы продолжите нецензурно выражаться мы можем ограничить вам доступ к чату. Не делайте так, уважайте себя и других участников сервера.',
-'На нашем сервере запрещено материться и выкладывать запрещенный контент. Не делайте так, иначе получите "мут"',
-'У нас нельзя материться. Не делайте так!',
-'У нас запрещено выражать свои эмоции нецензурной лексикой. Будьте культурными!'
-]
 
 @client.event
 
@@ -28,16 +22,19 @@ async def on_ready():
 	print( 'Бот подключился к серверу' )
 
 	await client.change_presence( status = discord.Status.online, activity = discord.Game( 'Вулканчик Пиндосии' ) )
-# Messages
+	
+# Filter 
 @client.event
 
 async def on_message( message ):
-	await client.process_commands(message)
+	await client.process_commands( message )
+
 	msg = message.content.lower()
 
-	if msg in bad:
-		await message.channel.send( random.choice(words))
-
+	if msg in bad_words:
+		await message.delete()
+		await message.author.send( f'{ message.author.name }, на нашем сервере запрещена нецензурная лексика, иначе вам будет выдан "мут" на сутки.' )
+		
 # Work with errors
 @client.event
 async def on_command_error( ctx, error ):
