@@ -240,7 +240,7 @@ async def clear_error( ctx, error ):
 		await ctx.send( f'{ ctx.author.name }, обязательно укажите аргумент для команды!' )
 
 	if isinstance( error, commands.MissingPermissions ):
-		await ctx.send( f'{ ctx.author.name }, у ваша роли недостаточно прав!' )
+		await ctx.send( f'{ ctx.author.name }, у вашей роли недостаточно прав!' )
 	
 # Get token
 token = os.environ.get('BOT_TOKEN')
