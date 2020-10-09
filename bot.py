@@ -46,7 +46,7 @@ async def on_command_error( ctx, error ):
 async def on_member_join( member ):
 	channel = client.get_channel( 757431308799574066 )
 
-	role = discord.utils.get( member.guild.roles, id = 756884707831971852 )
+	role = discord.utils.get( member.guild.roles, id = 760812703727353868 )
 
 	await member.add_roles( role )
 	await channel.send( embed = discord.Embed( description = f'Пользователь ``{ member.name }``, присоединился к серверу YELLOWSTONE', 
