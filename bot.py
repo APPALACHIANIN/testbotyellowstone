@@ -14,7 +14,7 @@ client = commands.Bot( command_prefix = PREFIX )
 client.remove_command( 'help' )
 
 # Words
-bad_words = [ 'хуй', 'пизда', 'залупа', 'жопа', 'говно', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
+bad = [ 'хуй', 'пизда', 'залупа', 'жопа', 'говно', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
 			 'гондон', 'пидарас', 'шмара', 'говно', 'хер', 'пидрила', 'ёбарь', 'ебать', 'ебашить', 'ебанутый', 'ебнутый', 'пизданутый', 'казах', 'москаль' ]
 
 @client.event
@@ -27,14 +27,12 @@ async def on_ready():
 # Filter 
 @client.event
 
-async def on_message( message ):
-	await client.process_commands( message )
-
-	msg = message.content.lower()
-
-	if msg in bad_words:
-		await message.delete()
-		await message.author.send( f'{ message.author.name }, на нашем сервере запрещена нецензурная лексика, иначе вам будет выдан "мут" на сутки.' )
+async def on_message(message):
+	await client.process_commands(message)
+	for a in bad:
+		if a in message.content:
+			await message.delete()
+			await message.author.send( f'{ message.author.name }, на нашем сервере запрещена нецензурная лексика, иначе вам будет выдан "мут" на сутки.' )
 		
 # Work with errors
 @client.event
