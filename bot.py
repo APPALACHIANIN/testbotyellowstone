@@ -32,7 +32,6 @@ async def on_message(message):
 	for a in bad:
 		if a in message.content:
 			await message.delete()
-			await message.author.send( f'{ message.author.name }, на нашем сервере запрещена нецензурная лексика, иначе вам будет выдан "мут" на сутки.' )
 		
 # Work with errors
 @client.event
