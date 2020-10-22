@@ -1,12 +1,10 @@
 import discord
 from discord.ext import commands 
 import os
-import datetime, pyowm
+import datetime
 from discord.utils import get
 import youtube_dl
 import random
-
-from time import sleep
 import requests
 from PIL import Image, ImageFont, ImageDraw
 import io
@@ -221,7 +219,6 @@ async def play(ctx, url : str):
 
 	song_name = name.rsplit('-', 2)
 	await ctx.send(f'Проигрывается композиция: {song_name[0]}')
-
 #Leave
 @client.command()
 async def leave(ctx):
