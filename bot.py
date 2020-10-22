@@ -1,10 +1,11 @@
 import discord
 from discord.ext import commands 
-import os
 import datetime
 from discord.utils import get
 import youtube_dl
 import random
+
+import os
 import requests
 from PIL import Image, ImageFont, ImageDraw
 import io
