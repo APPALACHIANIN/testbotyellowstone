@@ -242,9 +242,11 @@ async def card_user(ctx):
 
 	headline = ImageFont.truetype('arial.ttf', size = 20)
 	undertext = ImageFont.truetype('arial.ttf', size = 12)
-
+	
 	idraw.text((145, 15), f'{name}#{tag}', font = headline) #YELLLOWSTONE#XXXX
 	idraw.text((145, 50), f'ID: {ctx.author.id}', font = undertext)
+	
+	img.save('user_card.png')
 	
 	await ctx.send(file = discord.File(fp = 'user_card.png'))
 
