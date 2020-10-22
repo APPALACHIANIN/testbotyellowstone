@@ -220,18 +220,7 @@ async def play(ctx, url : str):
 
 	song_name = name.rsplit('-', 2)
 	await ctx.send(f'Проигрывается композиция: {song_name[0]}')
-#Leave
-@client.command()
-async def leave(ctx):
-	channel = ctx.message.author.voice.channel
-	voice = get(client.voice_clients, guild = ctx.guild)
-
-	if voice and voice.is_connected():
-		await voice.disconnect()
-	else:
-		voice = await channel.connect()
-		await ctx.send(f'Бот YELLOWSTONE отключился от канала: {channel}')
-
+	
 # Card of user
 @client.command(aliases = ['я', 'карточка пользователя', 'личная информация']) # .я
 async def card_user(ctx):
@@ -269,6 +258,18 @@ async def clear_error( ctx, error ):
 
 	if isinstance( error, commands.MissingPermissions ):
 		await ctx.send( f'{ ctx.author.name }, у вашей роли недостаточно прав!' )
+		
+#Leave
+@client.command()
+async def leave(ctx):
+	channel = ctx.message.author.voice.channel
+	voice = get(client.voice_clients, guild = ctx.guild)
+
+	if voice and voice.is_connected():
+		await voice.disconnect()
+	else:
+		voice = await channel.connect()
+		await ctx.send(f'Бот YELLOWSTONE отключился от канала: {channel}')
 	
 # Get token
 token = os.environ.get('BOT_TOKEN')
