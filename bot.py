@@ -245,9 +245,7 @@ async def card_user(ctx):
 
 	idraw.text((145, 15), f'{name}#{tag}', font = headline) #YELLLOWSTONE#XXXX
 	idraw.text((145, 50), f'ID: {ctx.author.id}', font = undertext)
-
-	img.save('user_card.png')
-
+	
 	await ctx.send(file = discord.File(fp = 'user_card.png'))
 
 # Error
