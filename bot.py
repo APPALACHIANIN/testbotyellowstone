@@ -1,12 +1,15 @@
 import discord
 from discord.ext import commands 
 import os
-import datetime
+import datetime, pyowm
 from discord.utils import get
 import youtube_dl
 import random
 
-
+from time import sleep
+import requests
+from PIL import Image, ImageFont, ImageDraw
+import io
 
 PREFIX = '$'
 
@@ -219,7 +222,7 @@ async def play(ctx, url : str):
 	song_name = name.rsplit('-', 2)
 	await ctx.send(f'Проигрывается композиция: {song_name[0]}')
 
-
+#Leave
 @client.command()
 async def leave(ctx):
 	channel = ctx.message.author.voice.channel
@@ -231,6 +234,34 @@ async def leave(ctx):
 		voice = await channel.connect()
 		await ctx.send(f'Бот YELLOWSTONE отключился от канала: {channel}')
 
+# Card of user
+@client.command(aliases = ['я', 'карточка пользователя', 'личная информация']) # .я
+async def card_user(ctx):
+	await ctx.channel.purge(limit = 1)
+
+	img = Image.new('RGBA', (400, 200), '#50bfb2')
+	url = str(ctx.author.avatar_url)[:-10]
+
+	response = requests.get(url, stream = True)
+	response = Image.open(io.BytesIO(response.content))
+	response = response.convert('RGBA')
+	response = response.resize((100, 100), Image.ANTIALIAS)
+
+	img.paste(response, (15, 15, 115, 115))
+
+	idraw = ImageDraw.Draw(img)
+	name = ctx.author.name # YELLOWSTONE
+	tag = ctx.author.discriminator # XXXX
+
+	headline = ImageFont.truetype('arial.ttf', size = 20)
+	undertext = ImageFont.truetype('arial.ttf', size = 12)
+
+	idraw.text((145, 15), f'{name}#{tag}', font = headline) #YELLLOWSTONE#XXXX
+	idraw.text((145, 50), f'ID: {ctx.author.id}', font = undertext)
+
+	img.save('user_card.png')
+
+	await ctx.send(file = discord.File(fp = 'user_card.png'))
 
 # Error
 @clear.error
@@ -245,7 +276,3 @@ async def clear_error( ctx, error ):
 token = os.environ.get('BOT_TOKEN')
 
 client.run(str(token))
-
-
-
-
