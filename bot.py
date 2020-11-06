@@ -150,19 +150,19 @@ async def mute( ctx, member: discord.Member ):
 # Private messages
 # Приветствие
 @client.command()
-async def send_hello( ctx ):
+async def hello( ctx ):
 	await ctx.author.send( 'Привет, мудила...' )
 # Прощание
 @client.command()
-async def send_goodbye( ctx ):
+async def bye( ctx ):
 	await ctx.author.send( 'Прощай, мудила...' )
 # Как дела
 @client.command()
-async def send_how_are_you( ctx ):
+async def how( ctx ):
 	await ctx.author.send( 'Иди нахуй, у меня все херово. Сегодня мне кастрировали список моих команд((' )
 # Для участника
 @client.command()
-async def send_m( ctx, member: discord.Member ):
+async def important( ctx, member: discord.Member ):
 	await member.send( f'Привет, { member.name}, передаю важное сообщение от имени { ctx.author.name } - "Ты - ПИДР"' )
 
 # Voice Chat
