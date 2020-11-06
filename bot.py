@@ -28,6 +28,8 @@ async def on_ready():
 @client.event
 
 async def on_message(message):
+	a = message.content.lower()
+	
 	await client.process_commands(message)
 	for a in bad:
 		if a in message.content:
