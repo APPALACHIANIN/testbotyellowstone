@@ -114,6 +114,13 @@ async def help( ctx ):
 	emb.add_field( name = '{}unban'.format( PREFIX ), value = 'Возобновление участнику доступа к серверу' )
 	emb.add_field( name = '{}time'.format( PREFIX ), value = 'Время по Иркутску' )
 	emb.add_field( name = '{}mute'.format( PREFIX ), value = 'Отключение функции чата у участника( Только администратором )' )
+	emb.add_field( name = '{}hello'.format( PREFIX ), value = 'Возобновление участнику доступа к серверу' )
+	emb.add_field( name = '{}bye'.format( PREFIX ), value = 'Бот прощается с вами' )
+	emb.add_field( name = '{}how'.format( PREFIX ), value = 'Бот овечает лично, как у него идут дела( временно не работает )' )
+	emb.add_field( name = '{}important'.format( PREFIX ), value = 'Бот посылает вам или вашему другу "важное сообщение"' )
+	emb.add_field( name = '{}poshel_nahuy_bot'.format( PREFIX ), value = 'Ответ бота на коронную фразу нашего сервера о неправильно настроенном фильтре мата' )
+	emb.add_field( name = '{}important'.format( PREFIX ), value = 'Тот самый поток ругани)' )
+
 
 
 	await ctx.send( embed = emb )
@@ -160,12 +167,20 @@ async def bye( ctx ):
 # Как дела
 @client.command()
 async def how( ctx ):
-	await ctx.author.send( 'Иди нахуй, у меня все херово. Сегодня мне кастрировали список моих команд((' )
+	await ctx.author.send( 'Иди нахуй, у меня все херово. Сегодня мне кастрировали список моих команд' )
 # Для участника
 @client.command()
 async def important( ctx, member: discord.Member ):
 	await member.send( f'Привет, { member.name}, передаю важное сообщение от имени { ctx.author.name } - "Ты - ПИДР"' )
-
+# Для участника 2
+@client.command()
+async def poshel_nahuy_bot( ctx, member: discord.Member ):
+	await member.send( f'Привет, { member.name}, мудила обоссаный, ты там охуел нахуй меня посылать нахуй? Я тебе знаешь, что тебе сейчас скажу нахуй, ты настолько охуел нахуй, что позабыл, кто тут батя на сервере нахуй. Еще раз, и я тебе твою тупую пиздострадальческую башку наебашу так, что кефиром срать начнешь нахуй...' )
+# Для участника
+@client.command()
+async def potok_slov( ctx, member: discord.Member ):
+	await member.send( f'{ member.name}, ублюдок, мать твою, а ну иди сюда, говно собачье, решил ко мне лезть? Ты, засранец вонючий, мать твою, а? Ну иди сюда, попробуй меня трахнуть, я тебя сам трахну, ублюдок, онанист чертов, будь ты проклят, иди идиот, трахать тебя и всю семью, говно собачье, жлоб вонючий, дерьмо, падла, иди сюда, мерзавец, негодяй, гад, иди сюда, ты — говно, жопа!' )
+	
 # Voice Chat
 @client.command()
 async def join(ctx):
