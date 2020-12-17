@@ -13,9 +13,6 @@ PREFIX = '$'
 client = commands.Bot( command_prefix = PREFIX )
 client.remove_command( 'help' )
 
-# Words
-bad = ['пизда', 'еба', 'ёба', 'хyй', 'xуй', 'xyй', 'хуи', 'ху', 'залупа', 'блядь', 'бля', 'сука', 'соси', 'жопахуйка', 'шалава', 'хуеглот', 'хуесос', 'хули', 'ахуеть', 'пидор', 'пидр', 'гомосек', 'блять',
-			 'гондон', 'пидарас', 'шмара', 'пидрила', 'ёбарь', 'ебать', 'ебашить', 'ебанутый', 'ебнутый', 'пизданутый', 'казах', 'москаль', 'хуе', 'пизд', 'eбан']
 
 @client.event
 
@@ -24,16 +21,7 @@ async def on_ready():
 
 	await client.change_presence( status = discord.Status.online, activity = discord.Game( 'Вулканчик Пиндосии' ) )
 	
-# Filter 
-@client.event
 
-async def on_message(message):
-	await client.process_commands(message)
-	msg = message.content.lower()
-	for msg in bad:
-		if msg in message.content:
-			await message.delete()
-		
 # Work with errors
 @client.event
 async def on_command_error( ctx, error ):
